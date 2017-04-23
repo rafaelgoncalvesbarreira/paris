@@ -4,7 +4,7 @@ from datetime import datetime
 
 if __name__== "__main__":
     start = PathItem(1 -1) #station index+1
-    target = PathItem(10 -1) #station index+1
+    target = PathItem(11 -1) #station index+1
 
     t1 = datetime.now()
     steps = astar.resolve(start,target)

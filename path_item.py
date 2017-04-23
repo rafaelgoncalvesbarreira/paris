@@ -55,12 +55,6 @@ class PathItem:
     def __lt__(self, other):
         return self.cost_f < other.cost_f
 
-    def equals(self, other):
-        pass
-
-    def calculate_equals(self, target):
-       pass
-
     def calc_G(self):
         current = self
         current_parent = self.parent
@@ -90,9 +84,6 @@ class PathItem:
         '''
         return self.calc_G() + self.calc_H(target)
     
-    
-    def swap_zero(self, zero_row, zero_col, row, col):
-        passs
 
     def get_adjacent(self):
         adjacents = []
