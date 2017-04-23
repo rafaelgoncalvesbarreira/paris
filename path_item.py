@@ -16,7 +16,7 @@ real_distance=[
 ]
 
 distance_in_line=[
-    [0,11,20,27,40,43,39,28,18,10,18,30,32],
+    [0,11,20,27,40,43,39,28,18,10,18,30,30,32],
     [11,0,9,16,29,32,28,19,11,4,17,23,21,24],
     [20,9,0,7,20,22,19,15,10,11,21,21,12,18],
     [27,16,7,0,13,16,12,13,13,18,26,21,11,17],
@@ -32,12 +32,12 @@ distance_in_line=[
     [32,24,18,17,20,20,17,30,28,23,39,37,5,0]
 ]
 
-blue = 0
-yellow = 1
-red =2
-green =3
+blue = [0, 1, 2, 3, 4]
+yellow = [9, 1, 8, 7, 4, 6]
+red = [10, 8, 2, 13]
+green =[11, 7, 3, 12,13]
 
-line=[]
+lines=[blue, yellow, red, green]
 
 class PathItem:
     """ """
@@ -46,6 +46,11 @@ class PathItem:
         self.velocity =30 #km/h
         self.parent = parent
         self.cost_f=0
+        self.line = -1
+        if parent != None:
+            for i, line in enumerate(lines):
+                if self.station in line and self.parent.station in line:
+                    self.line = i
 
     def __lt__(self, other):
         return self.cost_f < other.cost_f
@@ -58,16 +63,16 @@ class PathItem:
 
     def calc_G(self):
         current = self
-        cursor = self.parent
+        current_parent = self.parent
         cost =0
-        while cursor != None:
-            d = real_distance[cursor.station][current.station]
+        while current_parent != None:
+            d = real_distance[current_parent.station][current.station]
             cost = cost + (d / current.velocity * 60)
-            # if current.station != cursor.station: #sempre serah, nem sei pq to calculando isso
-            #     cost = cost +5
+            if current_parent.line != -1 and current.line != current_parent.line:
+                cost = cost +5
      
-            current = cursor
-            cursor = cursor.parent
+            current = current_parent
+            current_parent = current_parent.parent
         return cost
 
     def calc_H(self, target):
