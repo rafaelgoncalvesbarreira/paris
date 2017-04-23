@@ -37,7 +37,7 @@ def resolve(start, target):
             if node.station not in [x.station for x in close_list]:
                 if node.station in [item.station for item in open_list]:
                     existent = [item for item in open_list if item.station == node.station][0]
-                    if existent.calc_G() < node.calc_G():
+                    if node.calc_G() < existent.calc_G() :
                         existent.parent = current
                         existent.recalculate_cost(target)
                         index = open_list.index(existent)
